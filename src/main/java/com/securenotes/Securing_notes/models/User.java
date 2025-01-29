@@ -6,8 +6,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
+
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
@@ -17,7 +18,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
-@NoArgsConstructor
+
+@AllArgsConstructor
 @Entity
 @Table(name = "users",
         uniqueConstraints = {
@@ -25,6 +27,10 @@ import java.time.LocalDateTime;
                 @UniqueConstraint(columnNames = "email")
         })
 public class User {
+
+    public User(){
+
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -46,9 +52,7 @@ public class User {
     @JsonIgnore
     private String password;
 
-    public User(){
 
-    }
 
     private boolean accountNonLocked = true;
     private boolean accountNonExpired = true;

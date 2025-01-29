@@ -8,20 +8,29 @@ import com.securenotes.Securing_notes.models.User;
 import com.securenotes.Securing_notes.repositories.RoleRepository;
 import com.securenotes.Securing_notes.repositories.UserRepository;
 import com.securenotes.Securing_notes.service.UserService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+
+
 
 @Service
 
 public class UserServiceImpl implements UserService {
+
 
     @Autowired
     UserRepository userRepository;
 
     @Autowired
     RoleRepository roleRepository;
+
 
     @Override
     public void updateUserRole(Long userId, String roleName) {
@@ -33,7 +42,6 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -42,29 +50,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserById(Long id) {
-//        return userRepository.findById(id).orElseThrow();
-        User user = userRepository.findById(id).orElseThrow();
+      User user=userRepository.findById(id).orElseThrow();
+       // User user = userRepository.findById(id).orElseThrow();
+
         return convertToDto(user);
     }
 
+
     private UserDTO convertToDto(User user) {
-        return new UserDTO(
-                user.getUserId(),
-                user.getUserName(),
-                user.getEmail(),
-                user.isAccountNonLocked(),
-                user.isAccountNonExpired(),
-                user.isCredentialsNonExpired(),
-                user.isEnabled(),
-                user.getCredentialsExpiryDate(),
-                user.getAccountExpiryDate(),
-                user.getTwoFactorSecret(),
-                user.isTwoFactorEnabled(),
-                user.getSignUpMethod(),
-                user.getRole(),
-                user.getCreatedDate(),
-                user.getUpdatedDate()
-        );
+        return new UserDTO(user); // Passing the entire User object to the constructor
     }
 
 

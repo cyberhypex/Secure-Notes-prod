@@ -1,6 +1,7 @@
 package com.securenotes.Securing_notes.dtos;
 
 import com.securenotes.Securing_notes.models.Role;
+import com.securenotes.Securing_notes.models.User;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,6 +22,25 @@ public class UserDTO {
     private Role role;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
+
+    // Constructor to map User entity to UserDTO
+    public UserDTO(User user) {
+        this.userId = user.getUserId();
+        this.userName = user.getUserName();
+        this.email = user.getEmail();
+        this.accountNonLocked = user.isAccountNonLocked();
+        this.accountNonExpired = user.isAccountNonExpired();
+        this.credentialsNonExpired = user.isCredentialsNonExpired();
+        this.enabled = user.isEnabled();
+        this.credentialsExpiryDate = user.getCredentialsExpiryDate();
+        this.accountExpiryDate = user.getAccountExpiryDate();
+        this.twoFactorSecret = user.getTwoFactorSecret();
+        this.isTwoFactorEnabled = user.isTwoFactorEnabled();
+        this.signUpMethod = user.getSignUpMethod();
+        this.role = user.getRole();
+        this.createdDate = user.getCreatedDate();
+        this.updatedDate = user.getUpdatedDate();
+    }
 
     public UserDTO(Long userId, String userName, String email, boolean accountNonLocked, boolean accountNonExpired, boolean credentialsNonExpired, boolean enabled, LocalDate credentialsExpiryDate, LocalDate accountExpiryDate, String twoFactorSecret, boolean twoFactorEnabled, String signUpMethod, Role role, LocalDateTime createdDate, LocalDateTime updatedDate) {
     }
