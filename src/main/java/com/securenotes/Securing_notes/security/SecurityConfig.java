@@ -5,6 +5,7 @@ import com.securenotes.Securing_notes.models.Role;
 import com.securenotes.Securing_notes.models.User;
 import com.securenotes.Securing_notes.repositories.RoleRepository;
 import com.securenotes.Securing_notes.repositories.UserRepository;
+import com.securenotes.Securing_notes.security.services.CustomLoggingFilter;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.sql.DataSource;
 
@@ -43,6 +45,7 @@ public class SecurityConfig {
                       //  .requestMatchers("/public/**").permitAll()
                         .anyRequest().authenticated());
         http.csrf(AbstractHttpConfigurer::disable);
+        http.addFilterBefore(new CustomLoggingFilter(), UsernamePasswordAuthenticationFilter.class);
         //http.formLogin(withDefaults());
         http.httpBasic(withDefaults());
         return http.build();
