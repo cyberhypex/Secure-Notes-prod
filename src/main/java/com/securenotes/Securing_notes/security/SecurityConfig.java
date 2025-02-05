@@ -6,6 +6,7 @@ import com.securenotes.Securing_notes.models.User;
 import com.securenotes.Securing_notes.repositories.RoleRepository;
 import com.securenotes.Securing_notes.repositories.UserRepository;
 import com.securenotes.Securing_notes.security.services.CustomLoggingFilter;
+import com.securenotes.Securing_notes.security.services.RequestValidationFilter;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -46,6 +47,8 @@ public class SecurityConfig {
                         .anyRequest().authenticated());
         http.csrf(AbstractHttpConfigurer::disable);
         http.addFilterBefore(new CustomLoggingFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAfter(new RequestValidationFilter(), CustomLoggingFilter.class);
+
         //http.formLogin(withDefaults());
         http.httpBasic(withDefaults());
         return http.build();
