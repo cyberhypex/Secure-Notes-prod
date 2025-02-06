@@ -6,25 +6,17 @@ import com.securenotes.Securing_notes.models.User;
 import com.securenotes.Securing_notes.repositories.RoleRepository;
 import com.securenotes.Securing_notes.repositories.UserRepository;
 import com.securenotes.Securing_notes.security.services.CustomLoggingFilter;
-import com.securenotes.Securing_notes.security.services.RequestValidationFilter;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import javax.sql.DataSource;
 
 import java.time.LocalDate;
 
@@ -47,7 +39,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated());
         http.csrf(AbstractHttpConfigurer::disable);
         http.addFilterBefore(new CustomLoggingFilter(), UsernamePasswordAuthenticationFilter.class);
-        http.addFilterAfter(new RequestValidationFilter(), CustomLoggingFilter.class);
+    //    http.addFilterAfter(new RequestValidationFilter(), CustomLoggingFilter.class);
 
         //http.formLogin(withDefaults());
         http.httpBasic(withDefaults());
