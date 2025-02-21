@@ -8,6 +8,7 @@ import com.securenotes.Securing_notes.repositories.UserRepository;
 import com.securenotes.Securing_notes.security.jwt.AuthEntryPointJwt;
 import com.securenotes.Securing_notes.security.jwt.AuthTokenFilter;
 import com.securenotes.Securing_notes.security.services.CustomLoggingFilter;
+import jakarta.servlet.DispatcherType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -48,16 +49,20 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf->
-                csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).ignoringRequestMatchers("/api/auth/public/**"));
+                        csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).ignoringRequestMatchers("/api/auth/public/**"));
+
 
 
         http.authorizeHttpRequests((requests) ->
                 requests
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/csrf-token").permitAll()
-                        .requestMatchers("/api/auth/public/**").permitAll()
-                      //  .requestMatchers("/public/**").permitAll()
-                        .anyRequest().authenticated());
+                         // Specific public route first
+                        .requestMatchers("/api/auth/public/**").permitAll()      // General public routes
+                        .requestMatchers("/api/csrf-token").permitAll()          // CSRF token route
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")// Admin routes
+
+                        .anyRequest().authenticated()                            // All other requests require authentication
+        );
+
         http.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler));
         http.addFilterBefore(authenticationJwtTokenFilter(),
                 UsernamePasswordAuthenticationFilter.class);
