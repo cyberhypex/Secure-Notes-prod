@@ -1,15 +1,8 @@
 package com.securenotes.Securing_notes.security.request;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.time.LocalDate;
 import java.util.List;
 
-
-
-@Setter
-@Getter
 public class UserInfoResponse {
     private Long id;
     private String username;
@@ -38,5 +31,92 @@ public class UserInfoResponse {
         this.isTwoFactorEnabled = isTwoFactorEnabled;
         this.roles = roles;
     }
-}
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    public boolean isAccountNonExpired() {
+        return accountNonExpired;
+    }
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return credentialsNonExpired;
+    }
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public LocalDate getCredentialsExpiryDate() {
+        return credentialsExpiryDate;
+    }
+
+    public void setCredentialsExpiryDate(LocalDate credentialsExpiryDate) {
+        this.credentialsExpiryDate = credentialsExpiryDate;
+    }
+
+    public LocalDate getAccountExpiryDate() {
+        return accountExpiryDate;
+    }
+
+    public void setAccountExpiryDate(LocalDate accountExpiryDate) {
+        this.accountExpiryDate = accountExpiryDate;
+    }
+
+    public boolean isTwoFactorEnabled() {
+        return isTwoFactorEnabled;
+    }
+
+    public void setTwoFactorEnabled(boolean twoFactorEnabled) {
+        isTwoFactorEnabled = twoFactorEnabled;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+}

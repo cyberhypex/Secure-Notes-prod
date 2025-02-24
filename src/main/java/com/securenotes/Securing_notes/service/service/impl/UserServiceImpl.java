@@ -8,16 +8,11 @@ import com.securenotes.Securing_notes.models.User;
 import com.securenotes.Securing_notes.repositories.RoleRepository;
 import com.securenotes.Securing_notes.repositories.UserRepository;
 import com.securenotes.Securing_notes.service.UserService;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
-
-
+import java.util.Optional;
 
 
 @Service
@@ -59,6 +54,12 @@ public class UserServiceImpl implements UserService {
 
     private UserDTO convertToDto(User user) {
         return new UserDTO(user); // Passing the entire User object to the constructor
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        Optional<User> user = userRepository.findByUserName(username);
+        return user.orElseThrow(() -> new RuntimeException("User not found with username: " + username));
     }
 
 
